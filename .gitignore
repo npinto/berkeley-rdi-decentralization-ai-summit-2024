@@ -1,0 +1,28 @@
+# Archive folder with large indexed videos
+archive/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*~

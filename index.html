@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decentralization AI Summit 2024 - Video & Slides Index</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf_viewer.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .search-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .filter-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .video-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.5em;
+            color: white;
+            font-weight: bold;
+            background: rgba(102, 126, 234, 0.9);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+        
+        .video-card:hover .play-overlay {
+            opacity: 1;
+        }
+        
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 20px solid #667eea;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 5px;
+        }
+        
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .pdf-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 87, 34, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .pdf-icon {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .video-info {
+            padding: 15px;
+        }
+        
+        .video-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .video-speaker {
+            color: #667eea;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+        
+        .video-affiliation {
+            color: #999;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        
+        .video-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 15px;
+            font-size: 0.8em;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .action-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .session-header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin: 30px 0 20px 0;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .session-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .session-count {
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        /* PDF Viewer Modal */
+        .pdf-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .pdf-modal-content {
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pdf-modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f5f5f5;
+        }
+        
+        .pdf-modal-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .pdf-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .pdf-control-btn {
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .pdf-control-btn:hover {
+            background: #f0f0f0;
+        }
+        
+        .pdf-control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pdf-page-info {
+            padding: 0 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .pdf-viewer-container {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        #pdf-canvas {
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .modal-close {
+            width: 30px;
+            height: 30px;
+            background: #ff5722;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            background: #f44336;
+        }
+        
+        /* Video Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            max-height: calc(90vh - 140px);
+            overflow-y: auto;
+        }
+        
+        .video-player {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2em;
+        }
+        
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .pdf-modal-content {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+        }
+        
+        .highlight {
+            background: yellow;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎥 Decentralization AI Summit 2024</h1>
+            <div class="subtitle">Future of Decentralization and AI • August 6, 2024 • NYC</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">26</div>
+                    <div class="stat-label">Talks</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">20</div>
+                    <div class="stat-label">With Slides</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Sessions</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">6h 34m</div>
+                    <div class="stat-label">Total Duration</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="🔍 Search by speaker, title, or topic..." id="searchBox">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All Videos</button>
+                <button class="filter-btn" data-filter="with-slides">With Slides</button>
+                <button class="filter-btn" data-filter="opening">Opening</button>
+                <button class="filter-btn" data-filter="session1">Open Source AI</button>
+                <button class="filter-btn" data-filter="session2">Foundations I</button>
+                <button class="filter-btn" data-filter="session3">Foundations II</button>
+                <button class="filter-btn" data-filter="session4">Research</button>
+                <button class="filter-btn" data-filter="session5">DeAI Field</button>
+                <button class="filter-btn" data-filter="session6">Future</button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">Loading videos...</div>
+
+        <div id="videoContainer"></div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+            </div>
+            <div class="modal-body">
+                <video class="video-player" controls id="videoPlayer">
+                    <source src="" type="video/mp4">
+                </video>
+                <div id="modalInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div class="pdf-modal" id="pdfModal">
+        <div class="pdf-modal-content">
+            <div class="pdf-modal-header">
+                <div class="pdf-modal-title" id="pdfTitle">PDF Slides</div>
+                <div class="pdf-controls">
+                    <button class="pdf-control-btn" onclick="previousPage()" id="prevBtn">← Previous</button>
+                    <span class="pdf-page-info">
+                        Page <span id="currentPage">1</span> of <span id="totalPages">1</span>
+                    </span>
+                    <button class="pdf-control-btn" onclick="nextPage()" id="nextBtn">Next →</button>
+                    <button class="pdf-control-btn" onclick="downloadPDF()" id="downloadBtn">📥 Download</button>
+                    <button class="modal-close" onclick="closePDFModal()">×</button>
+                </div>
+            </div>
+            <div class="pdf-viewer-container">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configure PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        // PDF Viewer state
+        let pdfDoc = null;
+        let currentPDFPage = 1;
+        let totalPDFPages = 0;
+        let currentPDFPath = '';
+        
+        // Video data with PDF availability
+        const videos = [
+            // Opening
+            {
+                num: "01",
+                speaker: "Dawn Song",
+                affiliation: "Professor, UC Berkeley",
+                title: "Opening Remarks",
+                duration: "10:00",
+                session: "opening",
+                sessionName: "Opening",
+                file: "Session_00_Opening/01 Dawn Song (Professor, UC Berkeley) - Opening Remarks.mp4",
+                hasSlides: true
+            },
+            // Session I
+            {
+                num: "02",
+                speaker: "Sasha Rush",
+                affiliation: "Cornell Tech; Hugging Face",
+                title: "LMs Inside-Out",
+                duration: "16:32",
+                session: "session1",
+                sessionName: "Session I: Open Source AI",
+                file: "Session_01_Open_Source_AI/02 Sasha Rush (Associate Professor, Cornell Tech; Hugging Face) - LMs Inside-Out.mp4",
+                hasSlides: true
+            },
+            {
+                num: "03",
+                speaker: "Mala Kumar",
+                affiliation: "MLCommons",
+                title: "Building a Global AI Safety Benchmark",
+                duration: "13:58",
+                session: "session1",
+                sessionName: "Session I: Open Source AI",
+                file: "Session_01_Open_Source_AI/03 Mala Kumar (Director of Program Management AI Safety, MLCommons) - Building a Global AI Safety Benchmark.mp4",
+                hasSlides: true
+            },
+            {
+                num: "04",
+                speaker: "Dean Wampler",
+                affiliation: "IBM Research",
+                title: "What Issues Are Blocking AI Adoption",
+                duration: "13:28",
+                session: "session1",
+                sessionName: "Session I: Open Source AI",
+                file: "Session_01_Open_Source_AI/04 Dean Wampler (Head of Technology AI Alliance, IBM Research) - What Issues Are Blocking AI Adoption.mp4",
+                hasSlides: true
+            },
+            {
+                num: "05",
+                speaker: "Panel",
+                affiliation: "Multiple Speakers",
+                title: "Open Source vs Closed Source",
+                duration: "19:24",
+                session: "session1",
+                sessionName: "Session I: Open Source AI",
+                file: "Session_01_Open_Source_AI/05 Panel (Multiple Speakers) - Open Source vs Closed Source.mp4",
+                hasSlides: false
+            },
+            // Session II
+            {
+                num: "06",
+                speaker: "Moti Yung",
+                affiliation: "Google",
+                title: "Touching Points of Cryptography and AI",
+                duration: "19:43",
+                session: "session2",
+                sessionName: "Session II: Foundations Part 1",
+                file: "Session_02_Foundations_Part1/06 Moti Yung (Research Scientist, Google) - Touching Points of Cryptography and AI.mp4",
+                hasSlides: true
+            },
+            {
+                num: "07",
+                speaker: "Chester Chen",
+                affiliation: "NVIDIA",
+                title: "Decentralized Confidential AI",
+                duration: "16:31",
+                session: "session2",
+                sessionName: "Session II: Foundations Part 1",
+                file: "Session_02_Foundations_Part1/07 Chester Chen (Senior Manager, NVIDIA) - Decentralized Confidential AI.mp4",
+                hasSlides: true
+            },
+            {
+                num: "08",
+                speaker: "Dawn Song",
+                affiliation: "UC Berkeley",
+                title: "Building an Open Responsible AI Economy",
+                duration: "37:13",
+                session: "session2",
+                sessionName: "Session II: Foundations Part 1",
+                file: "Session_02_Foundations_Part1/08 Dawn Song (Professor, UC Berkeley) - Building an Open Responsible AI Economy.mp4",
+                hasSlides: true
+            },
+            {
+                num: "09",
+                speaker: "Worldcoin",
+                affiliation: "Worldcoin Foundation",
+                title: "Orb Demo",
+                duration: "21:24",
+                session: "session2",
+                sessionName: "Session II: Foundations Part 1",
+                file: "Session_02_Foundations_Part1/09 Worldcoin (Worldcoin Foundation) - Orb Demo.mp4",
+                hasSlides: false
+            },
+            // Session III
+            {
+                num: "10",
+                speaker: "Pramod Viswanath",
+                affiliation: "Princeton; Sentient",
+                title: "OML Open Monetizable Loyal",
+                duration: "20:22",
+                session: "session3",
+                sessionName: "Session III: Foundations Part 2",
+                file: "Session_03_Foundations_Part2/10 Pramod Viswanath (Professor, Princeton; Core-contributor, Sentient) - OML Open Monetizable Loyal.mp4",
+                hasSlides: true
+            },
+            {
+                num: "11",
+                speaker: "DC Builder",
+                affiliation: "Worldcoin Foundation",
+                title: "Decentralized AI Ecosystem",
+                duration: "11:37",
+                session: "session3",
+                sessionName: "Session III: Foundations Part 2",
+                file: "Session_03_Foundations_Part2/11 DC Builder (Research Engineer, Worldcoin Foundation) - Decentralized AI Ecosystem.mp4",
+                hasSlides: true
+            },
+            {
+                num: "12",
+                speaker: "Ruoxi Jia",
+                affiliation: "Virginia Tech",
+                title: "Fair Data Attribution at Scale",
+                duration: "11:51",
+                session: "session3",
+                sessionName: "Session III: Foundations Part 2",
+                file: "Session_03_Foundations_Part2/12 Ruoxi Jia (Assistant Professor, Virginia Tech) - Fair Data Attribution at Scale.mp4",
+                hasSlides: true
+            },
+            {
+                num: "13",
+                speaker: "Tanusree Sharma",
+                affiliation: "Penn State",
+                title: "AI Governance Technologies",
+                duration: "8:25",
+                session: "session3",
+                sessionName: "Session III: Foundations Part 2",
+                file: "Session_03_Foundations_Part2/13 Tanusree Sharma (Incoming Assistant Professor, Penn State) - AI Governance Technologies.mp4",
+                hasSlides: true
+            },
+            {
+                num: "14",
+                speaker: "Ian Miers",
+                affiliation: "UMD; Aleo",
+                title: "Privacy Preserving AI",
+                duration: "5:58",
+                session: "session3",
+                sessionName: "Session III: Foundations Part 2",
+                file: "Session_03_Foundations_Part2/14 Ian Miers (Assistant Professor, University of Maryland; Lead Research Scientist, Aleo) - Privacy Preserving AI.mp4",
+                hasSlides: true
+            },
+            {
+                num: "15",
+                speaker: "Tiancheng Xie",
+                affiliation: "Polyhedra Network",
+                title: "Decentralized Training",
+                duration: "5:36",
+                session: "session3",
+                sessionName: "Session III: Foundations Part 2",
+                file: "Session_03_Foundations_Part2/15 Tiancheng Xie (CTO, Polyhedra Network) - Decentralized Training.mp4",
+                hasSlides: true
+            },
+            // Session IV - Research
+            {
+                num: "16",
+                speaker: "Lilia Tang",
+                affiliation: "PhD Student, UIUC",
+                title: "Research Presentation",
+                duration: "5:23",
+                session: "session4",
+                sessionName: "Session IV: Research Spotlight",
+                file: "Session_04_Research_Spotlight/16 Lilia Tang (PhD Student, UIUC) - Research Presentation.mp4",
+                hasSlides: true
+            },
+            {
+                num: "17",
+                speaker: "Xiaoyuan Liu",
+                affiliation: "PhD Student, UC Berkeley",
+                title: "Research Presentation",
+                duration: "7:48",
+                session: "session4",
+                sessionName: "Session IV: Research Spotlight",
+                file: "Session_04_Research_Spotlight/17 Xiaoyuan Liu (PhD Student, UC Berkeley) - Research Presentation.mp4",
+                hasSlides: true
+            },
+            {
+                num: "18",
+                speaker: "Abhishek Singh",
+                affiliation: "PhD Student, MIT",
+                title: "Research Presentation",
+                duration: "6:27",
+                session: "session4",
+                sessionName: "Session IV: Research Spotlight",
+                file: "Session_04_Research_Spotlight/18 Abhishek Singh (PhD Student, MIT) - Research Presentation.mp4",
+                hasSlides: true
+            },
+            {
+                num: "19",
+                speaker: "Abraham Nash",
+                affiliation: "PhD Student, Oxford",
+                title: "Research Presentation",
+                duration: "3:37",
+                session: "session4",
+                sessionName: "Session IV: Research Spotlight",
+                file: "Session_04_Research_Spotlight/19 Abraham Nash (PhD Student, University of Oxford) - Research Presentation.mp4",
+                hasSlides: true
+            },
+            {
+                num: "20",
+                speaker: "Canyu Chen",
+                affiliation: "PhD Student, IIT",
+                title: "Research Presentation",
+                duration: "6:03",
+                session: "session4",
+                sessionName: "Session IV: Research Spotlight",
+                file: "Session_04_Research_Spotlight/20 Canyu Chen (PhD Student, Illinois Institute of Technology) - Research Presentation.mp4",
+                hasSlides: true
+            },
+            {
+                num: "21",
+                speaker: "Rabimba Karanjai",
+                affiliation: "PhD Student, Houston",
+                title: "Research Presentation",
+                duration: "4:20",
+                session: "session4",
+                sessionName: "Session IV: Research Spotlight",
+                file: "Session_04_Research_Spotlight/21 Rabimba Karanjai (PhD Student, University of Houston) - Research Presentation.mp4",
+                hasSlides: true
+            },
+            // Session V
+            {
+                num: "22",
+                speaker: "Panel",
+                affiliation: "Multiple Speakers",
+                title: "Data Infrastructure and Agents",
+                duration: "20:55",
+                session: "session5",
+                sessionName: "Session V: DeAI in the Field",
+                file: "Session_05_DeAI_Field/22 Panel (Multiple Speakers) - Data Infrastructure and Agents.mp4",
+                hasSlides: false
+            },
+            {
+                num: "23",
+                speaker: "Sreeram Kannan",
+                affiliation: "CEO, EigenLayer",
+                title: "Fireside Chat",
+                duration: "20:15",
+                session: "session5",
+                sessionName: "Session V: DeAI in the Field",
+                file: "Session_05_DeAI_Field/23 Sreeram Kannan (CEO, EigenLayer) - Fireside Chat.mp4",
+                hasSlides: false
+            },
+            {
+                num: "24",
+                speaker: "Panel",
+                affiliation: "Multiple Speakers",
+                title: "Decentralized AI Discussion",
+                duration: "14:34",
+                session: "session5",
+                sessionName: "Session V: DeAI in the Field",
+                file: "Session_05_DeAI_Field/24 Panel (Multiple Speakers) - Decentralized AI Discussion.mp4",
+                hasSlides: false
+            },
+            // Session VI
+            {
+                num: "25",
+                speaker: "Panel",
+                affiliation: "Multiple Speakers",
+                title: "Future of Decentralized AI",
+                duration: "18:24",
+                session: "session6",
+                sessionName: "Session VI: Future of Decentralized AI",
+                file: "Session_06_Future_DeAI/25 Panel (Multiple Speakers) - Future of Decentralized AI.mp4",
+                hasSlides: false
+            },
+            {
+                num: "26",
+                speaker: "Innovators Showcase",
+                affiliation: "Multiple Startups",
+                title: "Startup Presentations",
+                duration: "50:32",
+                session: "session6",
+                sessionName: "Session VI: Future of Decentralized AI",
+                file: "Session_06_Future_DeAI/26 Innovators Showcase (Multiple Startups) - Startup Presentations.mp4",
+                hasSlides: true
+            }
+        ];
+
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        function renderVideos() {
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = '';
+            
+            // Group videos by session
+            const sessions = {};
+            videos.forEach(video => {
+                if (!sessions[video.session]) {
+                    sessions[video.session] = {
+                        name: video.sessionName,
+                        videos: []
+                    };
+                }
+                sessions[video.session].videos.push(video);
+            });
+            
+            // Render each session
+            Object.keys(sessions).forEach(sessionKey => {
+                const session = sessions[sessionKey];
+                const filteredVideos = session.videos.filter(video => {
+                    const matchesFilter = currentFilter === 'all' || 
+                        video.session === currentFilter ||
+                        (currentFilter === 'with-slides' && video.hasSlides);
+                    const matchesSearch = searchTerm === '' || 
+                        video.speaker.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        video.affiliation.toLowerCase().includes(searchTerm.toLowerCase());
+                    return matchesFilter && matchesSearch;
+                });
+                
+                if (filteredVideos.length === 0) return;
+                
+                // Session header
+                const sessionHeader = document.createElement('div');
+                sessionHeader.className = 'session-header';
+                sessionHeader.id = sessionKey;
+                sessionHeader.innerHTML = `
+                    <div class="session-title">${session.name}</div>
+                    <div class="session-count">${filteredVideos.length} videos</div>
+                `;
+                container.appendChild(sessionHeader);
+                
+                // Video grid
+                const grid = document.createElement('div');
+                grid.className = 'video-grid';
+                
+                filteredVideos.forEach(video => {
+                    const card = document.createElement('div');
+                    card.className = 'video-card';
+                    
+                    const pdfIndicator = video.hasSlides ? 
+                        `<div class="pdf-indicator">
+                            <svg class="pdf-icon" fill="white" viewBox="0 0 24 24">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            </svg>
+                            PDF
+                        </div>` : '';
+                    
+                    const pdfButton = video.hasSlides ? 
+                        `<button class="action-btn" onclick="event.stopPropagation(); openPDF('${video.file.replace('.mp4', '.pdf')}', '${video.speaker} - ${video.title}')">
+                            📄 View Slides
+                        </button>` : '';
+                    
+                    card.innerHTML = `
+                        <div class="video-thumbnail">
+                            <img src="thumbnails/thumb_${video.num}.jpg" alt="${video.speaker} - ${video.title}" onerror="this.style.display='none'">
+                            <div class="video-number">${video.num}</div>
+                            <div class="video-duration">${video.duration}</div>
+                            ${pdfIndicator}
+                            <div class="play-overlay">
+                                <div class="play-icon"></div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">${highlightText(video.title)}</div>
+                            <div class="video-speaker">${highlightText(video.speaker)}</div>
+                            <div class="video-affiliation">${highlightText(video.affiliation)}</div>
+                            <div class="video-actions">
+                                <button class="action-btn" onclick="event.stopPropagation(); openVideo(videos[${videos.indexOf(video)}])">
+                                    ▶️ Play Video
+                                </button>
+                                ${pdfButton}
+                            </div>
+                        </div>
+                    `;
+                    
+                    card.onclick = () => openVideo(video);
+                    grid.appendChild(card);
+                });
+                
+                container.appendChild(grid);
+            });
+        }
+        
+        function highlightText(text) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+        
+        function openVideo(video) {
+            const modal = document.getElementById('videoModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalInfo = document.getElementById('modalInfo');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            modalTitle.textContent = `${video.num}. ${video.title}`;
+            
+            const pdfButton = video.hasSlides ? 
+                `<button class="filter-btn" onclick="openPDF('${video.file.replace('.mp4', '.pdf')}', '${video.speaker} - ${video.title}')">📄 View PDF Slides</button>` : '';
+            
+            modalInfo.innerHTML = `
+                <h3>${video.speaker}</h3>
+                <p>${video.affiliation}</p>
+                <p><strong>Session:</strong> ${video.sessionName}</p>
+                <p><strong>Duration:</strong> ${video.duration}</p>
+                <p><strong>File:</strong> ${video.file}</p>
+                <br>
+                <button class="filter-btn" onclick="window.open('${video.file}', '_blank')">Open Video File</button>
+                ${pdfButton}
+            `;
+            
+            videoPlayer.src = video.file;
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('videoModal');
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.pause();
+            videoPlayer.src = '';
+            modal.style.display = 'none';
+        }
+        
+        // PDF Viewer Functions
+        function openPDF(pdfPath, title) {
+            const modal = document.getElementById('pdfModal');
+            const pdfTitle = document.getElementById('pdfTitle');
+            
+            currentPDFPath = pdfPath;
+            pdfTitle.textContent = title || 'PDF Slides';
+            modal.style.display = 'flex';
+            
+            // For local file system, just open the PDF directly in a new tab
+            // PDF.js requires a web server for local files due to CORS
+            if (window.location.protocol === 'file:') {
+                // Open PDF in new tab for local files
+                window.open(pdfPath, '_blank');
+                closePDFModal();
+                return;
+            }
+            
+            // Load the PDF (for served files)
+            const loadingTask = pdfjsLib.getDocument(pdfPath);
+            loadingTask.promise.then(function(pdf) {
+                pdfDoc = pdf;
+                totalPDFPages = pdf.numPages;
+                document.getElementById('totalPages').textContent = totalPDFPages;
+                currentPDFPage = 1;
+                renderPDFPage(currentPDFPage);
+            }).catch(function(error) {
+                console.error('Error loading PDF:', error);
+                alert('Could not load PDF. File may be missing.');
+                closePDFModal();
+            });
+        }
+        
+        function renderPDFPage(pageNum) {
+            if (!pdfDoc) return;
+            
+            pdfDoc.getPage(pageNum).then(function(page) {
+                const canvas = document.getElementById('pdf-canvas');
+                const ctx = canvas.getContext('2d');
+                const viewport = page.getViewport({ scale: 1.5 });
+                
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                
+                page.render(renderContext);
+                
+                // Update page counter
+                document.getElementById('currentPage').textContent = pageNum;
+                
+                // Update button states
+                document.getElementById('prevBtn').disabled = (pageNum <= 1);
+                document.getElementById('nextBtn').disabled = (pageNum >= totalPDFPages);
+            });
+        }
+        
+        function nextPage() {
+            if (currentPDFPage < totalPDFPages) {
+                currentPDFPage++;
+                renderPDFPage(currentPDFPage);
+            }
+        }
+        
+        function previousPage() {
+            if (currentPDFPage > 1) {
+                currentPDFPage--;
+                renderPDFPage(currentPDFPage);
+            }
+        }
+        
+        function downloadPDF() {
+            if (currentPDFPath) {
+                window.open(currentPDFPath, '_blank');
+            }
+        }
+        
+        function closePDFModal() {
+            const modal = document.getElementById('pdfModal');
+            modal.style.display = 'none';
+            pdfDoc = null;
+            currentPDFPage = 1;
+            totalPDFPages = 0;
+            currentPDFPath = '';
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const pdfModal = document.getElementById('pdfModal');
+            if (pdfModal.style.display === 'flex') {
+                if (e.key === 'ArrowLeft') {
+                    previousPage();
+                } else if (e.key === 'ArrowRight') {
+                    nextPage();
+                } else if (e.key === 'Escape') {
+                    closePDFModal();
+                }
+            }
+        });
+        
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            renderVideos();
+        });
+        
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                renderVideos();
+            });
+        });
+        
+        // Close modal on click outside
+        window.onclick = (e) => {
+            const modal = document.getElementById('videoModal');
+            const pdfModal = document.getElementById('pdfModal');
+            if (e.target === modal) {
+                closeModal();
+            } else if (e.target === pdfModal) {
+                closePDFModal();
+            }
+        };
+        
+        // Initial render
+        renderVideos();
+    </script>
+</body>
+</html>
