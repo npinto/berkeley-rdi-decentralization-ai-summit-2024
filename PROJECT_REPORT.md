@@ -4,7 +4,7 @@
 
 This report documents the complete automated processing and archival of the Summit on Responsible Decentralized Intelligence 2024 conference videos. The project transformed two 3+ hour YouTube livestreams into 26 individually cut, indexed, and searchable videos with extracted presentation slides, deployed as an interactive web archive on GitHub Pages.
 
-**Final Deliverable:** https://npinto.github.io/rdi-decentralization-ai-summit-2024/
+**Final Deliverable:** https://npinto.github.io/berkeley-rdi-decentralization-ai-summit-2024/
 
 ## Project Overview
 
@@ -274,6 +274,6 @@ The automation approach, while introducing some rough edges, enabled rapid proce
 
 *This archive was created with the assistance of an AI coding agent to make summit content more accessible to the community. For authoritative versions, please refer to the original conference page.*
 
-**Repository:** https://github.com/npinto/rdi-decentralization-ai-summit-2024
-**Live Site:** https://npinto.github.io/rdi-decentralization-ai-summit-2024/
+**Repository:** https://github.com/npinto/berkeley-rdi-decentralization-ai-summit-2024
+**Live Site:** https://npinto.github.io/berkeley-rdi-decentralization-ai-summit-2024/
 **Original Event:** https://rdi.berkeley.edu/events/decentralizationaisummit24
